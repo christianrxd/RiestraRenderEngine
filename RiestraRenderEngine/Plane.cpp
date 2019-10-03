@@ -38,3 +38,10 @@ void Plane::SetVertex(int index, Vertex inputVertex)
 	vertexList[index].y = inputVertex.y;
 	vertexList[index].z = inputVertex.z;
 }
+
+void Plane::SetColor(int inputR, int inputG, int inputB)
+{
+	r = inputR;
+	g = inputG;
+	b = inputB;
+}

@@ -18,10 +18,8 @@ public:
 
 	string PrintModelCoordinates(Model myModel);
 
-	vector<vector<Point>> GetPrintCoordinates(Model myModel);
+	vector<Point> GetPrintCoordinates(Plane myPlane);
 
-	//vector<Point> GetPrintCoordinates(Model myModel, double transformX, double transformY, double transformZ, double sizeScale, double alpha, double beta, double gamma);
-
-	vector<vector<Point>> GetPrintCoordinates(Model myModel, double transformX, double transformY, double transformZ, double sizeScale, double alpha, double beta, double gamma);
+	vector<Point> GetPrintCoordinates(Plane myPlane, double transformX, double transformY, double transformZ, double sizeScale, double alpha, double beta, double gamma);
 };
 #endif ModelFunctions_H

@@ -22,6 +22,8 @@ public:
 	void SetVertex(int index, double inputX, double inputY, double inputZ);
 
 	void SetVertex(int index, Vertex inputVertex);
+
+	void SetColor(int inputR, int inputG, int inputB);
 };
 #endif Plane_H
 

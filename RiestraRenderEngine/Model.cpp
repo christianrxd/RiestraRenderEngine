@@ -51,6 +51,9 @@ void Model::AddPlane(Vertex vA, Vertex vB, Vertex vC, Vertex vD)
 	pB.SetVertex(1, vC);
 	pB.SetVertex(2, vA);
 
+	pA.SetColor(255, 0, 0);
+	pB.SetColor(255, 0, 0);
+
 	planeList.push_back(pA);
 	planeList.push_back(pB);
 }

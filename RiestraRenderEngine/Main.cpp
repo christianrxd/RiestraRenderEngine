@@ -14,7 +14,7 @@ using namespace std;
 
 void InitSDL(SDL_Window* Window, SDL_Renderer* Renderer);
 SDL_Renderer* StartGraphics();
-void DrawModel(SDL_Renderer* Renderer, vector<vector<Point>> planeList);
+void DrawModel(SDL_Renderer* Renderer, Model myModel, double transformX, double transformY, double transformZ, double sizeScale, double alpha, double beta, double gamma);
 void CubeDemo(SDL_Renderer* Renderer);
 void HeartDemo(SDL_Renderer* Renderer);
 
@@ -51,17 +51,28 @@ void InitSDL(SDL_Window* Window, SDL_Renderer* Renderer)
 	SDL_Delay(3000);
 }
 
-void DrawModel(SDL_Renderer* Renderer, vector<vector<Point>> planeList)
+void DrawModel(SDL_Renderer* Renderer, Model myModel, double transformX, double transformY, double transformZ, double sizeScale, double alpha, double beta, double gamma)
 {
 	int offsetX = 350;
 	int offsetY = 350;
+	
+	ModelFunctions myModelFunctions;
 
 	SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 0);
 	SDL_RenderClear(Renderer);
 
-	for (vector<Point> pointList : planeList)
+	vector<Plane> planeList = myModel.planeList;
+
+	for (Plane myPlane : planeList)
 	{
+		int r, g, b;
+		r = myPlane.r;
+		g = myPlane.g;
+		b = myPlane.b;
+
 		int aX, aY, bX, bY, cX, cY;
+
+		vector<Point> pointList = myModelFunctions.GetPrintCoordinates(myPlane, transformX, transformY, transformZ, sizeScale, alpha, beta, gamma);
 
 		aX = pointList[0].pX + offsetX;
 		aY = pointList[0].pY + offsetY;
@@ -72,7 +83,7 @@ void DrawModel(SDL_Renderer* Renderer, vector<vector<Point>> planeList)
 		cX = pointList[2].pX + offsetX;
 		cY = pointList[2].pY + offsetY;
 
-		SDL_SetRenderDrawColor(Renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+		SDL_SetRenderDrawColor(Renderer, r, g, b, SDL_ALPHA_OPAQUE);
 		SDL_RenderDrawLine(Renderer, aX, aY, bX, bY);
 		SDL_RenderDrawLine(Renderer, bX, bY, cX, cY);
 		SDL_RenderDrawLine(Renderer, aX, aY, cX, cY);
@@ -92,17 +103,20 @@ void CubeDemo(SDL_Renderer* Renderer)
 	double tX = 0;
 	double tY = 0;
 	double tZ = 0;
+
+	double alpha = 0;
+	double beta = 0;
+	double gamma = 0;
 	double sizeScale = 75;
 
 	for (int index = 0; index < 720; index += 10)
 	{
-		vector<vector<Point>> pointList = myModelFunctions.GetPrintCoordinates(myModel, 0, 0, 0, sizeScale, tX, tY, tZ);
-		DrawModel(Renderer, pointList);
-		tY -= 2;
-		tZ += 2;
+		DrawModel(Renderer, myModel, tX, tY, tZ, sizeScale, alpha, beta, gamma);
+		beta -= 2;
+		gamma += 2;
 	}
 
-	for (int index = 0; index < 720; index += 10)
+	/*for (int index = 0; index < 720; index += 10)
 	{
 		vector<vector<Point>> pointList = myModelFunctions.GetPrintCoordinates(myModel, 0, 0, 0, sizeScale, tX, tY, tZ);
 		DrawModel(Renderer, pointList);
@@ -116,13 +130,13 @@ void CubeDemo(SDL_Renderer* Renderer)
 		DrawModel(Renderer, pointList);
 		tY -= 2;
 		tZ += 2;
-	}
+	}*/
 }
 
 void HeartDemo(SDL_Renderer* Renderer)
 {
 	ModelCreator myModelCreator;
-	ModelFunctions myModelFunctions;
+	
 
 	Model myModel = myModelCreator.CreateHeart(2);
 
@@ -131,7 +145,7 @@ void HeartDemo(SDL_Renderer* Renderer)
 	double tZ = 0;
 	double sizeScale = 25;
 
-	for (int index = 0; index < 720; index += 10)
+	/*for (int index = 0; index < 720; index += 10)
 	{
 		vector<vector<Point>> pointList = myModelFunctions.GetPrintCoordinates(myModel, 0, 0, 0, sizeScale, tX, tY, tZ);
 		DrawModel(Renderer, pointList);
@@ -153,6 +167,6 @@ void HeartDemo(SDL_Renderer* Renderer)
 		DrawModel(Renderer, pointList);
 		tY -= 2;
 		tZ += 2;
-	}
+	}*/
 
 }
